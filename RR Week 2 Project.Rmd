@@ -45,6 +45,11 @@ stepint <- act %>%
 
 #make time-series plot
 with(stepint,plot(interval, avgstep, type = "l", xlab = "Interval", ylab = "Average # Steps", main = "Average Steps Broken Down by Interval"))
+
+png("Time Series Steps by Interval.png")
+with(stepint,plot(interval, avgstep, type = "l", xlab = "Interval", ylab = "Average # Steps", main = "Average Steps Broken Down by Interval"))
+
+dev.off()
 ```
 The 5-minute interval that, on average, contains the maximum number of steps
 
@@ -88,8 +93,9 @@ sum_finalact <- act_imputted %>%
   summarise(steps = sum(steps))
 
 #create histogram of sum dataset
-hist(sum_finalact$steps, xlab = "Number Steps by Day", main = "Steps Taken per Day (Imputted Missing Values")
-
+png("Histogram of Steps by Day.png")
+hist(sum_finalact$steps, xlab = "Number Steps by Day", main = "Steps Taken per Day (Imputted Missing Values)")
+dev.off()
 
 #Calculate mean and median for total number steps taken per day
 meanmed_act_imputted <- act_imputted %>%
@@ -120,8 +126,12 @@ final <- weekdayact %>%
 library(ggplot2)
 
 g <- ggplot(final,aes(interval, mean))
-g + geom_line() + facet_grid(weektime ~ .) +
+finalgraph <- g + geom_line() + facet_grid(weektime ~ .) +
   xlab("Interval") + ylab("Average Steps Taken") + ggtitle("Average Steps Taken Across Intervals Broken by Weekday or Weekend")
+
+png("Average Steps by Weekday or Weekend.png")
+print(finalgraph)
+dev.off()
 
 #library(knitr)
 #knit("RR Week 2 Project.Rmd")
